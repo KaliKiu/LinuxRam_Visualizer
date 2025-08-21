@@ -5,15 +5,17 @@
 #include <string>
 #include <cstdio>
 #include <cstdlib>
-#include "../include/parse.hpp"
+#include "../include/data.hpp"
 
-
-namespace Parse{
-    const char* MEMINFO_PATH = "/proc/meminfo";
-
-    std::unordered_map<std::string, int32_t> parseMeminfo(const char* MEMINFO_COPY_PATH){
+    Data::Data(){
+        
+    }
+    Data::~Data(){
+        
+    }
+    std::unordered_map<std::string, int32_t> Data::parseMeminfo(){
         std::unordered_map<std::string,int32_t> meminfo_map;
-        std::filesystem::copy_file(Parse::MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
+        std::filesystem::copy_file(MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
         std::filesystem::permissions(MEMINFO_COPY_PATH,std::filesystem::perms::all,std::filesystem::perm_options::add);
         std::ifstream meminfo(MEMINFO_COPY_PATH);
         
@@ -34,4 +36,3 @@ namespace Parse{
         meminfo.close();
         return meminfo_map;
     }
-}

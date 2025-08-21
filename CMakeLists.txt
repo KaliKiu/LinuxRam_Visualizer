@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(include)
 add_executable(ram_visualizer 
 		src/main.cpp
-		src/parse.cpp
-		src/fetch.cpp)
+		src/thread_handling.cpp
+		src/data.cpp)

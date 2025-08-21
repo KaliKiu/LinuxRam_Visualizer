@@ -86,46 +86,46 @@ CMakeFiles/ram_visualizer.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ram_visualizer.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_GitHub/ram_visualizer/src/main.cpp -o CMakeFiles/ram_visualizer.dir/src/main.cpp.s
 
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.o: CMakeFiles/ram_visualizer.dir/flags.make
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.o: /media/sf_GitHub/ram_visualizer/src/parse.cpp
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.o: CMakeFiles/ram_visualizer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/sf_GitHub/ram_visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ram_visualizer.dir/src/parse.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ram_visualizer.dir/src/parse.cpp.o -MF CMakeFiles/ram_visualizer.dir/src/parse.cpp.o.d -o CMakeFiles/ram_visualizer.dir/src/parse.cpp.o -c /media/sf_GitHub/ram_visualizer/src/parse.cpp
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o: CMakeFiles/ram_visualizer.dir/flags.make
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o: /media/sf_GitHub/ram_visualizer/src/thread_handling.cpp
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o: CMakeFiles/ram_visualizer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/sf_GitHub/ram_visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o -MF CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o.d -o CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o -c /media/sf_GitHub/ram_visualizer/src/thread_handling.cpp
 
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ram_visualizer.dir/src/parse.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_GitHub/ram_visualizer/src/parse.cpp > CMakeFiles/ram_visualizer.dir/src/parse.cpp.i
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_GitHub/ram_visualizer/src/thread_handling.cpp > CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.i
 
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ram_visualizer.dir/src/parse.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_GitHub/ram_visualizer/src/parse.cpp -o CMakeFiles/ram_visualizer.dir/src/parse.cpp.s
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_GitHub/ram_visualizer/src/thread_handling.cpp -o CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.s
 
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o: CMakeFiles/ram_visualizer.dir/flags.make
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o: /media/sf_GitHub/ram_visualizer/src/fetch.cpp
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o: CMakeFiles/ram_visualizer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/sf_GitHub/ram_visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o -MF CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o.d -o CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o -c /media/sf_GitHub/ram_visualizer/src/fetch.cpp
+CMakeFiles/ram_visualizer.dir/src/data.cpp.o: CMakeFiles/ram_visualizer.dir/flags.make
+CMakeFiles/ram_visualizer.dir/src/data.cpp.o: /media/sf_GitHub/ram_visualizer/src/data.cpp
+CMakeFiles/ram_visualizer.dir/src/data.cpp.o: CMakeFiles/ram_visualizer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/sf_GitHub/ram_visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ram_visualizer.dir/src/data.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/ram_visualizer.dir/src/data.cpp.o -MF CMakeFiles/ram_visualizer.dir/src/data.cpp.o.d -o CMakeFiles/ram_visualizer.dir/src/data.cpp.o -c /media/sf_GitHub/ram_visualizer/src/data.cpp
 
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ram_visualizer.dir/src/fetch.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_GitHub/ram_visualizer/src/fetch.cpp > CMakeFiles/ram_visualizer.dir/src/fetch.cpp.i
+CMakeFiles/ram_visualizer.dir/src/data.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/ram_visualizer.dir/src/data.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_GitHub/ram_visualizer/src/data.cpp > CMakeFiles/ram_visualizer.dir/src/data.cpp.i
 
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ram_visualizer.dir/src/fetch.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_GitHub/ram_visualizer/src/fetch.cpp -o CMakeFiles/ram_visualizer.dir/src/fetch.cpp.s
+CMakeFiles/ram_visualizer.dir/src/data.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/ram_visualizer.dir/src/data.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_GitHub/ram_visualizer/src/data.cpp -o CMakeFiles/ram_visualizer.dir/src/data.cpp.s
 
 # Object files for target ram_visualizer
 ram_visualizer_OBJECTS = \
 "CMakeFiles/ram_visualizer.dir/src/main.cpp.o" \
-"CMakeFiles/ram_visualizer.dir/src/parse.cpp.o" \
-"CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o"
+"CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o" \
+"CMakeFiles/ram_visualizer.dir/src/data.cpp.o"
 
 # External object files for target ram_visualizer
 ram_visualizer_EXTERNAL_OBJECTS =
 
 ram_visualizer: CMakeFiles/ram_visualizer.dir/src/main.cpp.o
-ram_visualizer: CMakeFiles/ram_visualizer.dir/src/parse.cpp.o
-ram_visualizer: CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o
+ram_visualizer: CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o
+ram_visualizer: CMakeFiles/ram_visualizer.dir/src/data.cpp.o
 ram_visualizer: CMakeFiles/ram_visualizer.dir/build.make
 ram_visualizer: CMakeFiles/ram_visualizer.dir/compiler_depend.ts
 ram_visualizer: CMakeFiles/ram_visualizer.dir/link.txt

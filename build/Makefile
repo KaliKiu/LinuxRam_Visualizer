@@ -129,29 +129,29 @@ ram_visualizer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/build
 .PHONY : ram_visualizer/fast
 
-src/fetch.o: src/fetch.cpp.o
-.PHONY : src/fetch.o
+src/data.o: src/data.cpp.o
+.PHONY : src/data.o
 
 # target to build an object file
-src/fetch.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o
-.PHONY : src/fetch.cpp.o
+src/data.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/data.cpp.o
+.PHONY : src/data.cpp.o
 
-src/fetch.i: src/fetch.cpp.i
-.PHONY : src/fetch.i
+src/data.i: src/data.cpp.i
+.PHONY : src/data.i
 
 # target to preprocess a source file
-src/fetch.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/fetch.cpp.i
-.PHONY : src/fetch.cpp.i
+src/data.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/data.cpp.i
+.PHONY : src/data.cpp.i
 
-src/fetch.s: src/fetch.cpp.s
-.PHONY : src/fetch.s
+src/data.s: src/data.cpp.s
+.PHONY : src/data.s
 
 # target to generate assembly for a file
-src/fetch.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/fetch.cpp.s
-.PHONY : src/fetch.cpp.s
+src/data.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/data.cpp.s
+.PHONY : src/data.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -177,29 +177,29 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/parse.o: src/parse.cpp.o
-.PHONY : src/parse.o
+src/thread_handling.o: src/thread_handling.cpp.o
+.PHONY : src/thread_handling.o
 
 # target to build an object file
-src/parse.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/parse.cpp.o
-.PHONY : src/parse.cpp.o
+src/thread_handling.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o
+.PHONY : src/thread_handling.cpp.o
 
-src/parse.i: src/parse.cpp.i
-.PHONY : src/parse.i
+src/thread_handling.i: src/thread_handling.cpp.i
+.PHONY : src/thread_handling.i
 
 # target to preprocess a source file
-src/parse.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/parse.cpp.i
-.PHONY : src/parse.cpp.i
+src/thread_handling.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.i
+.PHONY : src/thread_handling.cpp.i
 
-src/parse.s: src/parse.cpp.s
-.PHONY : src/parse.s
+src/thread_handling.s: src/thread_handling.cpp.s
+.PHONY : src/thread_handling.s
 
 # target to generate assembly for a file
-src/parse.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/parse.cpp.s
-.PHONY : src/parse.cpp.s
+src/thread_handling.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ram_visualizer.dir/build.make CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.s
+.PHONY : src/thread_handling.cpp.s
 
 # Help Target
 help:
@@ -210,15 +210,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ram_visualizer"
-	@echo "... src/fetch.o"
-	@echo "... src/fetch.i"
-	@echo "... src/fetch.s"
+	@echo "... src/data.o"
+	@echo "... src/data.i"
+	@echo "... src/data.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/parse.o"
-	@echo "... src/parse.i"
-	@echo "... src/parse.s"
+	@echo "... src/thread_handling.o"
+	@echo "... src/thread_handling.i"
+	@echo "... src/thread_handling.s"
 .PHONY : help
 
 

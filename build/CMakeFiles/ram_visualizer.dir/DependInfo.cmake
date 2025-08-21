@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/media/sf_GitHub/ram_visualizer/src/fetch.cpp" "CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o" "gcc" "CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o.d"
+  "/media/sf_GitHub/ram_visualizer/src/data.cpp" "CMakeFiles/ram_visualizer.dir/src/data.cpp.o" "gcc" "CMakeFiles/ram_visualizer.dir/src/data.cpp.o.d"
   "/media/sf_GitHub/ram_visualizer/src/main.cpp" "CMakeFiles/ram_visualizer.dir/src/main.cpp.o" "gcc" "CMakeFiles/ram_visualizer.dir/src/main.cpp.o.d"
-  "/media/sf_GitHub/ram_visualizer/src/parse.cpp" "CMakeFiles/ram_visualizer.dir/src/parse.cpp.o" "gcc" "CMakeFiles/ram_visualizer.dir/src/parse.cpp.o.d"
+  "/media/sf_GitHub/ram_visualizer/src/thread_handling.cpp" "CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o" "gcc" "CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o.d"
   "" "ram_visualizer" "gcc" "CMakeFiles/ram_visualizer.dir/link.d"
   )
 

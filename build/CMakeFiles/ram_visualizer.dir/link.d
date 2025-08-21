@@ -3,8 +3,8 @@ ram_visualizer: \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crti.o \
   /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o \
   CMakeFiles/ram_visualizer.dir/src/main.cpp.o \
-  CMakeFiles/ram_visualizer.dir/src/parse.cpp.o \
-  CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o \
+  CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o \
+  CMakeFiles/ram_visualizer.dir/src/data.cpp.o \
   /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libm.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libm.so \
@@ -42,9 +42,9 @@ ram_visualizer: \
 
 CMakeFiles/ram_visualizer.dir/src/main.cpp.o:
 
-CMakeFiles/ram_visualizer.dir/src/parse.cpp.o:
+CMakeFiles/ram_visualizer.dir/src/thread_handling.cpp.o:
 
-CMakeFiles/ram_visualizer.dir/src/fetch.cpp.o:
+CMakeFiles/ram_visualizer.dir/src/data.cpp.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so:
 
