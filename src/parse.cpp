@@ -1,15 +1,20 @@
-#include<unordered_map>
-#include<iostream>
-#include<filesystem>
+#include <unordered_map>
+#include <iostream>
+#include <filesystem>
 #include <fstream>
 #include <string>
+#include <cstdio>
+#include <cstdlib>
+#include "../include/parse.hpp"
 
 
 namespace Parse{
-    constexpr const char* MEMINFO_PATH = "/proc/meminfo";
-    std::unordered_map<std::string, uint32_t> parseMeminfo(const char*& MEMINFO_COPY_PATH){
-        std::unordered_map<std::string,uint32_t> meminfo_map;
+    const char* MEMINFO_PATH = "/proc/meminfo";
+
+    std::unordered_map<std::string, int32_t> parseMeminfo(const char* MEMINFO_COPY_PATH){
+        std::unordered_map<std::string,int32_t> meminfo_map;
         std::filesystem::copy_file(Parse::MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
+        std::filesystem::permissions(MEMINFO_COPY_PATH,std::filesystem::perms::all,std::filesystem::perm_options::add);
         std::ifstream meminfo(MEMINFO_COPY_PATH);
         
         std::string line;
@@ -18,8 +23,15 @@ namespace Parse{
             size_t colPos = line.find(':');
             std::string key= line.substr(0,colPos);
             std::string value_str=line.substr(colPos+1);
-            value_str.erase(value_str.length()-3);
-            int value = std::stoi(value_str);
+            // remove trailing "kB" if present
+            if(value_str.size() >= 2 && value_str.substr(value_str.size()-2) == "kB") {
+                value_str.erase(value_str.size()-2);
+            }
+            int32_t value = std::stoul(value_str);
+            meminfo_map[key]=value;
+            printf("\n%s: %d kb MAP : %d",key.c_str(),value,meminfo_map[key]);
         }
+        meminfo.close();
+        return meminfo_map;
     }
 }
