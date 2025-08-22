@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <mutex>
+#include <dirent.h>
 #include "../include/data.hpp"
 
     Data::Data(){
@@ -39,6 +40,35 @@
         std::lock_guard<std::mutex> lock(meminfo_mutex);
         this->meminfo_struct->memtotal = meminfo_map[std::string(MEMTOTAL)];
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
-        this->meminfo_struct->memcached = meminfo_map[std::string(MEMCACHED)];
-        this->meminfo_struct->membuffers = meminfo_map[std::string(BUFFERS)];
+
+    }
+    void Data::parsePidMaps(std::mutex &pidmap_vector_mutex, int count){
+        return;
+    }
+
+    std::vector<std::string> Data::getPid(){
+        const char* procDir = "/proc";
+        DIR* dir = opendir(procDir);
+        if (!dir) {
+            perror("opendir");
+            throw 0;
+        }
+        std::vector<std::string> pids;
+        struct dirent* entry;
+
+        auto isNumber = [&](const std::string& s){
+            for (char c : s)
+                if (!std::isdigit(c)) return false;
+            return true;
+        };
+
+        while ((entry = readdir(dir)) != nullptr) {
+            std::string name(entry->d_name);
+            if (isNumber(name)) {
+                pids.push_back(name);
+            }
+        }
+
+        closedir(dir);
+        return pids;
     }

@@ -1,3 +1,0 @@
-/media/sf_GitHub/ram_visualizer/build/CMakeFiles/ram_visualizer.dir
-/media/sf_GitHub/ram_visualizer/build/CMakeFiles/edit_cache.dir
-/media/sf_GitHub/ram_visualizer/build/CMakeFiles/rebuild_cache.dir
