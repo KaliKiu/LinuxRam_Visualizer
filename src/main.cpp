@@ -8,6 +8,7 @@
 
 int main(){
     Data* data = new Data();
+    
     try{
         Thread::threadHandling(data);
     }catch(const std::filesystem::filesystem_error& e){

@@ -190,5 +190,7 @@ CMakeFiles/ram_visualizer.dir/src/data.cpp.o: \
  /usr/include/c++/14/bits/fs_ops.h /usr/include/c++/14/fstream \
  /usr/include/x86_64-linux-gnu/c++/14/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/14/bits/c++io.h \
- /usr/include/c++/14/bits/fstream.tcc \
+ /usr/include/c++/14/bits/fstream.tcc /usr/include/c++/14/mutex \
+ /usr/include/c++/14/bits/std_mutex.h \
+ /usr/include/c++/14/bits/unique_lock.h \
  /media/sf_GitHub/ram_visualizer/src/../include/data.hpp

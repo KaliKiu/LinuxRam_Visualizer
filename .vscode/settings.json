@@ -116,6 +116,14 @@
     "compare": "cpp",
     "concepts": "cpp",
     "algorithm": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "deque": "cpp",
+    "stack": "cpp",
+    "fstream": "cpp",
+    "complex": "cpp",
+    "iomanip": "cpp",
+    "sstream": "cpp",
+    "__string": "cpp",
+    "thread": "cpp"
   }
 }

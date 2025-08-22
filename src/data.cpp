@@ -5,15 +5,17 @@
 #include <string>
 #include <cstdio>
 #include <cstdlib>
+#include <mutex>
 #include "../include/data.hpp"
 
     Data::Data(){
-        
+       meminfo_struct = new Meminfo(); 
     }
+
     Data::~Data(){
-        
+        delete meminfo_struct;
     }
-    std::unordered_map<std::string, int32_t> Data::parseMeminfo(){
+    void Data::parseMeminfo(std::mutex& meminfo_mutex){
         std::unordered_map<std::string,int32_t> meminfo_map;
         std::filesystem::copy_file(MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
         std::filesystem::permissions(MEMINFO_COPY_PATH,std::filesystem::perms::all,std::filesystem::perm_options::add);
@@ -31,8 +33,12 @@
             }
             int32_t value = std::stoul(value_str);
             meminfo_map[key]=value;
-            printf("\n%s: %d kb MAP : %d",key.c_str(),value,meminfo_map[key]);
+            //printf("\n%s: %d kb MAP : %d",key.c_str(),value,meminfo_map[key]);
         }
         meminfo.close();
-        return meminfo_map;
+        std::lock_guard<std::mutex> lock(meminfo_mutex);
+        this->meminfo_struct->memtotal = meminfo_map[std::string(MEMTOTAL)];
+        this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
+        this->meminfo_struct->memcached = meminfo_map[std::string(MEMCACHED)];
+        this->meminfo_struct->membuffers = meminfo_map[std::string(BUFFERS)];
     }
