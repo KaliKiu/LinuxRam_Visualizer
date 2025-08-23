@@ -9,13 +9,6 @@
 #include <dirent.h>
 #include "../include/data.hpp"
 
-    Data::Data(){
-       meminfo_struct = new Meminfo(); 
-    }
-
-    Data::~Data(){
-        delete meminfo_struct;
-    }
     void Data::parseMeminfo(std::mutex& meminfo_mutex){
         std::unordered_map<std::string,int32_t> meminfo_map;
         std::filesystem::copy_file(MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
@@ -42,7 +35,9 @@
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
     }
-    void Data::parsePidMaps(std::mutex &pidmap_vector_mutex, int count){
+    void Data::parsePidMaps(std::mutex &pidmap_vector_mutex,std::string pid, int count){
+        std::string path = "/proc/"+pid+"/mem";
+        std::cout<<path <<std::endl;
         return;
     }
 
@@ -55,20 +50,17 @@
         }
         std::vector<std::string> pids;
         struct dirent* entry;
-
         auto isNumber = [&](const std::string& s){
             for (char c : s)
                 if (!std::isdigit(c)) return false;
             return true;
         };
-
         while ((entry = readdir(dir)) != nullptr) {
             std::string name(entry->d_name);
             if (isNumber(name)) {
                 pids.push_back(name);
             }
         }
-
         closedir(dir);
         return pids;
     }

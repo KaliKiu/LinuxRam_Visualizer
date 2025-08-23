@@ -24,9 +24,9 @@ namespace Thread{
                             std::vector<std::string> pids = Data::getPid();
                             int count = 0;
                             std::vector<std::thread> threads;
-                            for(const std::string& pid : pids){
-                                threads.emplace_back([&data, &pidmap_vector_mutex, count]{
-                                    data->parsePidMaps(pidmap_vector_mutex,count);
+                            for(const std::string pid : pids){
+                                threads.emplace_back([&data, &pidmap_vector_mutex,&pid, count]{
+                                    data->parsePidMaps(pidmap_vector_mutex,pid,count);
                                 });
                             }
                             for(auto &t : threads) t.join();
