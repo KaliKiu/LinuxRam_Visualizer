@@ -4,7 +4,7 @@
 **WORK IN PROGRESS**
 
 ## Current Features
--   **Working threads to safely fetch&parse /proc/meminfo and /proc/<pid>/maps files for all pids.**<br>
+-   **Working threads to safely fetch&parse /proc/meminfo and /proc/*pid*/maps files for all pids.**<br>
 -   **Safe multi-threaded data access**<br>
 -   **Error handling is decent**
 -----
