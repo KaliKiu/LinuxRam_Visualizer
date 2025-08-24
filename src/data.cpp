@@ -41,7 +41,7 @@
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::stringstream buffer;
         std::ifstream pidmap(pidmem_path);
-        buffer << pidmap;
+        buffer <<pidmap.rdbuf();
         std::string line;
         //! istringtream is better YES, but i wanted to try myself..
         while(std::getline(buffer,line)){
@@ -50,8 +50,8 @@
             }
             size_t startEndPointer = line.find('-');
             size_t WhiteSpace = line.find(' ');
-            size_t WhiteSpace2 = line.find(' ',Whitespace+1);
-            auto forwardWhitespace = [&WhiteSpace,&Whitespace2](int &line,int times){
+            size_t WhiteSpace2 = line.find(' ',WhiteSpace+1);
+            auto forwardWhiteSpace = [&WhiteSpace,&WhiteSpace2](std::string &line,int&& times){
                 for(;times==0;times--){
                 WhiteSpace = WhiteSpace2+1;
                 if(line.find(' ',WhiteSpace)!=std::string::npos){
@@ -60,7 +60,7 @@
                     WhiteSpace2 = 0;
                 }
                 }
-            }
+            };
             std::string start_address = line.substr(0,startEndPointer);
             std::string end_address = line.substr(startEndPointer+1,WhiteSpace);
             //skip perms,offset,dev| check for indeo if = 0 (stack,heap etc);

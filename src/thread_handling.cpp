@@ -41,10 +41,10 @@ namespace Thread{
                     data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
                     count++;
             {   
-                auto VPage_map_ptr = data->VPage_map_ptr;
+                auto VPage_map_ptr = data->VPage_map;
                 std::lock_guard<std::mutex> lock(VPage_map_mutex);
-                for(auto &t : data->VPage_map){
-                    printf("\n%d: 0x%x-0x%x",t.first,t.second->,t.second->end_Vaddr);
+                for(auto &t : *data->VPage_map){
+                    printf("\n%d: 0x-0x",t.first);
                 }
             }
         std::this_thread::sleep_for(std::chrono::seconds(1));
