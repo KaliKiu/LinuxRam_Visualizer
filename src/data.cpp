@@ -36,12 +36,10 @@
 
     }
     void Data::parsePidMaps(std::mutex &pidmap_vector_mutex,std::string pid, int count){
-        std::string pidmem_path = "/proc/"+pid+"/mem";
-        std::string pidmem_path_copy = "../data/"+pid;
-        //create file
-        std::ofstream file(pidmem_path_copy);
-        file.close();
-        std::remove()
+        std::string pidmem_path = "/proc/"+pid+"/maps";
+        std::string pidmap_str;
+        std::ifstream pidmap(pidmem_path);
+        std::cout<<pid<<std::endl<<pidmap_str.length()<<pidmap_str<<std::endl;
         return;
     }
 
