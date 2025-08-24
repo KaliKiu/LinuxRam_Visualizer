@@ -25,7 +25,7 @@ class Data{
 
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
-        void parsePidMaps(std::mutex &pidmap_vector_mutex,std::string pid,int count);
+        void parsePidMaps(std::mutex &pidmap_VM_mutex,std::string pid,int count);
         static std::vector<std::string> getPid();
 
         //DATA
@@ -35,7 +35,7 @@ class Data{
         };
         Meminfo* meminfo_struct;
         //vector filled with virtual addressed mapped per pid
-        std::vector<std::map<uint32_t,uint32_t>> VM_map;
+        std::map<uint32_t,uint32_t> VM_map;
 
 };
 

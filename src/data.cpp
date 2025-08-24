@@ -35,11 +35,19 @@
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
     }
-    void Data::parsePidMaps(std::mutex &pidmap_vector_mutex,std::string pid, int count){
+    void Data::parsePidMaps(std::mutex &pidmap_VM_mutex,std::string pid, int count){
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::string pidmap_str;
         std::ifstream pidmap(pidmem_path);
-        std::cout<<pid<<std::endl<<pidmap_str.length()<<pidmap_str<<std::endl;
+        pidmap >> pidmap_str;
+        if(pidmap_str==""){
+            std::cout<<pid<<" nope" <<std::endl;
+            std::lockguard<std::mutex> lock(pidmap_VM_mutex);
+            
+            return;
+        }
+        std::cout<<pid<<" "<<pidmap_str<<std::endl;
+        std::lockguard<std::mutex> lock(pidmap_VM_mutex);
         return;
     }
 

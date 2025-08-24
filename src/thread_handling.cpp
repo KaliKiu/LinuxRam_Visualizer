@@ -9,7 +9,7 @@
 namespace Thread{
     void threadHandling(Data* data){
         std::mutex meminfo_mutex;
-        std::mutex pidmap_vector_mutex;
+        std::mutex pidmap_VM_mutex;
 
         std::thread meminfo_fetch([&data,&meminfo_mutex] {
                         while(true){
@@ -19,14 +19,14 @@ namespace Thread{
                         });
         meminfo_fetch.detach();
 
-        std::thread fetch_pid_data([&data,&pidmap_vector_mutex]{
+        std::thread fetch_pid_data([&data,&pidmap_VM_mutex]{
                         while(true){
                             std::vector<std::string> pids = Data::getPid();
                             int count = 0;
                             std::vector<std::thread> threads;
                             for(const std::string pid : pids){
-                                threads.emplace_back([&data, &pidmap_vector_mutex,&pid, count]{
-                                    data->parsePidMaps(pidmap_vector_mutex,pid,count);
+                                threads.emplace_back([&data, &pidmap_VM_mutex,&pid, count]{
+                                    data->parsePidMaps(pidmap_VM_mutex,pid,count);
                                 });
                             }
                             for(auto &t : threads) t.join();
