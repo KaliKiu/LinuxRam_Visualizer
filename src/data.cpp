@@ -38,9 +38,39 @@
     }
     void Data::parsePidMaps(std::mutex &pidmap_VM_mutex,const std::string pid, int count){
         std::string pidmem_path = "/proc/"+pid+"/maps";
-        std::string pidmap_str;
+        std::stringstream buffer;
         std::ifstream pidmap(pidmem_path);
-        pidmap >> pidmap_str;
+        buffer << pidmap;
+        std::string line;
+        while(std::getline(buffer,line)){
+            size_t startEndPointer = line.find('-');
+            size_t WhiteSpace = line.find(' ');
+            size_t WhiteSpace2 = line.find(' ',Whitespace+1);
+            auto forwardWhitespace = [&WhiteSpace,&Whitespace2](int &line,int times){
+                for(;times==0;times--){
+                WhiteSpace = WhiteSpace2+1;
+                if(line.find(' ',WhiteSpace)!=std::string::npos){
+                    WhiteSpace2 = line.find(' ',WhiteSpace);
+                }else{
+                    WhiteSpace2 = 0;
+                }
+                }
+            }
+            std::string start_address = line.substr(0,startEndPointer);
+            std::string end_address = line.substr(startEndPointer+1,WhiteSpace);
+            //skip perms,offset,dev. check for inode>0
+            forwardWhiteSpace(line,4);
+            std::string inode = line.substr(WhiteSpace,WhiteSpace2);
+            forwardWhiteSpace(line,1);
+            std::string path_name = line.substr(WhiteSpace);
+            
+
+            
+
+            
+
+
+        }
         if(pidmap_str==""){
             //no need, can iterate trough actually mapped pids (just for debugging reason rn)
             std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
@@ -56,7 +86,7 @@
         vm_address->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
         vm_address->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
         //also pass ownership of struct to map
-        this->VM_map.emplace(std::stoul(pid),std::move(vm_address));
+        this->Vpage.emplace(std::stoul(pid),std::move(vm_address));
         return;
     }
 

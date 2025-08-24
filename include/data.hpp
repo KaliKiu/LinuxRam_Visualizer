@@ -37,12 +37,14 @@ class Data{
         };
         Meminfo* meminfo_struct;
         
-        struct VM_address_struct{
+        struct Vpage{
             uintptr_t start_Vaddr;
             uintptr_t end_Vaddr;
         };
+        std::vector<Vpage> pid_pages;
+        
         //vector filled with virtual address mapped per pid in smart pointer
-        std::map<uint32_t,std::shared_ptr<VM_address_struct>> VM_map;
+        std::map<uint32_t,std::shared_ptr<Vpage>> VPage_map;
         
 
 };
