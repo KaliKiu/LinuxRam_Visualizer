@@ -1,5 +1,5 @@
 # RAM_VISUALIZER<br>
---*This Repository is for documentation purposes* **DO NOT USE THIS CODE, ITS ASS AND PROBABLY UNSAFE AF**<br>
+--*This Repository is for documentation purposes* **DO NOT USE THIS CODE, ITS ASS AND PROBABLY UNSAFE**<br>
 
 **WORK IN PROGRESS**
 
