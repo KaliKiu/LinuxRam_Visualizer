@@ -36,13 +36,18 @@
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
     }
-    void Data::parsePidMaps(std::mutex &pidmap_VM_mutex,const std::string pid, int count){
+    void Data::parsePidMap(std::mutex &VPage_map_mutex,const std::string pid, int count){
+        auto PidPages = std::make_shared<std::vector<std::shared_ptr<VPage>>>();
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::stringstream buffer;
         std::ifstream pidmap(pidmem_path);
         buffer << pidmap;
         std::string line;
+        //! istringtream is better YES, but i wanted to try myself..
         while(std::getline(buffer,line)){
+            if(line ==""){
+                continue;
+            }
             size_t startEndPointer = line.find('-');
             size_t WhiteSpace = line.find(' ');
             size_t WhiteSpace2 = line.find(' ',Whitespace+1);
@@ -58,36 +63,21 @@
             }
             std::string start_address = line.substr(0,startEndPointer);
             std::string end_address = line.substr(startEndPointer+1,WhiteSpace);
-            //skip perms,offset,dev. check for inode>0
+            //skip perms,offset,dev| check for indeo if = 0 (stack,heap etc);
             forwardWhiteSpace(line,4);
             std::string inode = line.substr(WhiteSpace,WhiteSpace2);
             forwardWhiteSpace(line,1);
             std::string path_name = line.substr(WhiteSpace);
-            
 
-            
-
-            
-
-
+            auto page = std::make_shared<VPage>();
+            page->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
+            page->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
+            page->inode = std::stoul(inode);
+            page->path_name = path_name;
+            PidPages->push_back(std::move(page));
         }
-        if(pidmap_str==""){
-            //no need, can iterate trough actually mapped pids (just for debugging reason rn)
-            std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
-            //this->VM_map.emplace(std::stoul(pid),0);
-            return;
-        }
-        size_t stop_pos = pidmap_str.find('-');
-        std::string start_address = pidmap_str.substr(0,stop_pos);
-        std::string end_address = pidmap_str.substr(stop_pos+1);
-        auto vm_address = std::make_shared<VM_address_struct>();
-
-        std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
-        vm_address->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
-        vm_address->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
-        //also pass ownership of struct to map
-        this->Vpage.emplace(std::stoul(pid),std::move(vm_address));
-        return;
+        std::lock_guard<std::mutex> lock(VPage_map_mutex);
+        this->VPage_map->emplace(std::stol(pid),std::move(PidPages));
     }
 
     std::vector<std::string> Data::getPid(){

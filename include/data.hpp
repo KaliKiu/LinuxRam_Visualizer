@@ -9,7 +9,10 @@
 class Data{
     public:
         //CONSTRUCTOR
-        Data():VM_map(){meminfo_struct = new Meminfo();}
+        Data(){
+            meminfo_struct = new Meminfo();
+            VPage_map = std::make_shared<std::map<uint32_t, std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>>();
+            }
         ~Data(){delete meminfo_struct;};
 
         //CONSTS
@@ -27,7 +30,7 @@ class Data{
 
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
-        void parsePidMaps(std::mutex &pidmap_VM_mutex,const std::string pid,int count);
+        void parsePidMap(std::mutex &VPage_map_mutex,const std::string pid,int count);
         static std::vector<std::string> getPid();
 
         //DATA
@@ -37,16 +40,13 @@ class Data{
         };
         Meminfo* meminfo_struct;
         
-        struct Vpage{
+        struct VPage{
             uintptr_t start_Vaddr;
             uintptr_t end_Vaddr;
+            uint32_t inode;
+            std::string path_name;
         };
-        std::vector<Vpage> pid_pages;
-        
         //vector filled with virtual address mapped per pid in smart pointer
-        std::map<uint32_t,std::shared_ptr<Vpage>> VPage_map;
-        
-
+        std::shared_ptr<std::map<uint32_t,std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>> VPage_map;
 };
-
 #endif

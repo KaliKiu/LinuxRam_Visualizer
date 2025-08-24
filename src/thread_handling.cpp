@@ -10,7 +10,7 @@
 namespace Thread{
     void threadHandling(Data* data){
         std::mutex meminfo_mutex;
-        std::mutex pidmap_VM_mutex;
+        std::mutex VPage_map_mutex;
 
         std::thread meminfo_fetch([&data,&meminfo_mutex] {
                         while(true){
@@ -20,14 +20,14 @@ namespace Thread{
                         });
         meminfo_fetch.detach();
 
-        std::thread fetch_pid_data([&data,&pidmap_VM_mutex]{
+        std::thread fetch_pid_data([&data,&VPage_map_mutex]{
                         while(true){
                             std::vector<std::string> pids = Data::getPid();
                             int count = 0;
                             std::vector<std::thread> threads;
                             for(const std::string &pid : pids){
-                                threads.emplace_back([&data, &pidmap_VM_mutex,&pid, count]{
-                                    data->parsePidMaps(pidmap_VM_mutex,pid,count);
+                                threads.emplace_back([&data, &VPage_map_mutex,&pid, count]{
+                                    data->parsePidMap(VPage_map_mutex,pid,count);
                                 });
                             }
                             for(auto &t : threads) t.join();
@@ -40,10 +40,11 @@ namespace Thread{
         while(true){printf("\nCOUNT: %d\nMemTotal: %d\nMemFree: %d\n",count,
                     data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
                     count++;
-            {
-                std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
-                for(auto &t : data->VM_map){
-                    printf("\n%d: 0x%x-0x%x",t.first,t.second->start_Vaddr,t.second->end_Vaddr);
+            {   
+                auto VPage_map_ptr = data->VPage_map_ptr;
+                std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                for(auto &t : data->VPage_map){
+                    printf("\n%d: 0x%x-0x%x",t.first,t.second->,t.second->end_Vaddr);
                 }
             }
         std::this_thread::sleep_for(std::chrono::seconds(1));
