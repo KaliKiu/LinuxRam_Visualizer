@@ -4,6 +4,8 @@
 #include <map>
 #include <mutex>
 #include <vector>
+#include <cstdint>
+#include <memory>
 class Data{
     public:
         //CONSTRUCTOR
@@ -25,7 +27,7 @@ class Data{
 
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
-        void parsePidMaps(std::mutex &pidmap_VM_mutex,std::string pid,int count);
+        void parsePidMaps(std::mutex &pidmap_VM_mutex,const std::string pid,int count);
         static std::vector<std::string> getPid();
 
         //DATA
@@ -34,8 +36,14 @@ class Data{
             uint32_t memfree;
         };
         Meminfo* meminfo_struct;
-        //vector filled with virtual addressed mapped per pid
-        std::map<uint32_t,uint32_t> VM_map;
+        
+        struct VM_address_struct{
+            uintptr_t start_Vaddr;
+            uintptr_t end_Vaddr;
+        };
+        //vector filled with virtual address mapped per pid in smart pointer
+        std::map<uint32_t,std::shared_ptr<VM_address_struct>> VM_map;
+        
 
 };
 

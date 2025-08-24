@@ -124,6 +124,7 @@
     "iomanip": "cpp",
     "sstream": "cpp",
     "__string": "cpp",
-    "thread": "cpp"
+    "thread": "cpp",
+    "map": "cpp"
   }
 }

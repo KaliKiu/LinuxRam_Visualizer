@@ -2,6 +2,7 @@
 #include <thread>
 #include <mutex>
 #include <unordered_map>
+#include <memory>
 #include "../include/thread_handling.hpp"
 #include "../include/data.hpp"
 
@@ -24,7 +25,7 @@ namespace Thread{
                             std::vector<std::string> pids = Data::getPid();
                             int count = 0;
                             std::vector<std::thread> threads;
-                            for(const std::string pid : pids){
+                            for(const std::string &pid : pids){
                                 threads.emplace_back([&data, &pidmap_VM_mutex,&pid, count]{
                                     data->parsePidMaps(pidmap_VM_mutex,pid,count);
                                 });
@@ -37,7 +38,15 @@ namespace Thread{
         fetch_pid_data.detach();
         int count=0;
         while(true){printf("\nCOUNT: %d\nMemTotal: %d\nMemFree: %d\n",count,
-                                                                        data->meminfo_struct->memtotal,
-                                                                        data->meminfo_struct->memfree);count++;std::this_thread::sleep_for(std::chrono::seconds(1));}
+                    data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
+                    count++;
+            {
+                std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
+                for(auto &t : data->VM_map){
+                    printf("\n%d: 0x%x-0x%x",t.first,t.second->start_Vaddr,t.second->end_Vaddr);
+                }
+            }
+        std::this_thread::sleep_for(std::chrono::seconds(1));
     }
+}
 }

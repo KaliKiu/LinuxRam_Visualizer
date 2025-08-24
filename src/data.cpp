@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <mutex>
 #include <dirent.h>
+#include <memory>
 #include "../include/data.hpp"
 
     void Data::parseMeminfo(std::mutex& meminfo_mutex){
@@ -35,19 +36,27 @@
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
     }
-    void Data::parsePidMaps(std::mutex &pidmap_VM_mutex,std::string pid, int count){
+    void Data::parsePidMaps(std::mutex &pidmap_VM_mutex,const std::string pid, int count){
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::string pidmap_str;
         std::ifstream pidmap(pidmem_path);
         pidmap >> pidmap_str;
         if(pidmap_str==""){
-            std::cout<<pid<<" nope" <<std::endl;
-            std::lockguard<std::mutex> lock(pidmap_VM_mutex);
-            
+            //no need, can iterate trough actually mapped pids (just for debugging reason rn)
+            std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
+            //this->VM_map.emplace(std::stoul(pid),0);
             return;
         }
-        std::cout<<pid<<" "<<pidmap_str<<std::endl;
-        std::lockguard<std::mutex> lock(pidmap_VM_mutex);
+        size_t stop_pos = pidmap_str.find('-');
+        std::string start_address = pidmap_str.substr(0,stop_pos);
+        std::string end_address = pidmap_str.substr(stop_pos+1);
+        auto vm_address = std::make_shared<VM_address_struct>();
+
+        std::lock_guard<std::mutex> lock(pidmap_VM_mutex);
+        vm_address->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
+        vm_address->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
+        //also pass ownership of struct to map
+        this->VM_map.emplace(std::stoul(pid),std::move(vm_address));
         return;
     }
 
