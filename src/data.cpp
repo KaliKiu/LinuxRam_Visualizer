@@ -12,12 +12,11 @@
 
     void Data::parseMeminfo(std::mutex& meminfo_mutex){
         std::unordered_map<std::string,int32_t> meminfo_map;
-        std::filesystem::copy_file(MEMINFO_PATH,MEMINFO_COPY_PATH,std::filesystem::copy_options::overwrite_existing);
-        std::filesystem::permissions(MEMINFO_COPY_PATH,std::filesystem::perms::all,std::filesystem::perm_options::add);
-        std::ifstream meminfo(MEMINFO_COPY_PATH);
-        
+        std::ifstream meminfo(MEMINFO_PATH);
+        std::stringstream buffer;
+        buffer <<meminfo.rdbuf();
         std::string line;
-        while(std::getline(meminfo,line)){
+        while(std::getline(buffer,line)){
             //get key;
             size_t colPos = line.find(':');
             std::string key= line.substr(0,colPos);
@@ -26,6 +25,13 @@
             if(value_str.size() >= 2 && value_str.substr(value_str.size()-2) == "kB") {
                 value_str.erase(value_str.size()-2);
             }
+            auto trim = [](std::string& s) {
+                size_t start = s.find_first_not_of(" \t");
+                size_t end = s.find_last_not_of(" \t");
+                if (start == std::string::npos) { s = ""; return; }
+                    s = s.substr(start, end - start + 1);
+                };
+            trim(value_str);
             int32_t value = std::stoul(value_str);
             meminfo_map[key]=value;
             //printf("\n%s: %d kb MAP : %d",key.c_str(),value,meminfo_map[key]);
@@ -43,7 +49,7 @@
         std::ifstream pidmap(pidmem_path);
         buffer <<pidmap.rdbuf();
         std::string line;
-        //! istringtream is better YES, but i wanted to try myself..
+        //! istringstream is better YES, but i wanted to try myself..
         while(std::getline(buffer,line)){
             if(line ==""){
                 continue;
