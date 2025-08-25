@@ -44,7 +44,7 @@ namespace Thread{
                 auto VPage_map_ptr = data->VPage_map;
                 std::lock_guard<std::mutex> lock(VPage_map_mutex);
                 for(auto &t : *data->VPage_map){
-                    printf("\n%d: 0x-0x",t.first);
+                    printf("\n%d: 0x-0x",t.first,(*t.second)[0]->start_Vaddr,(*t.second)[0]->end_Vaddr);
                 }
             }
         std::this_thread::sleep_for(std::chrono::seconds(1));

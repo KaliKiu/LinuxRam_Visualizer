@@ -44,7 +44,6 @@
 
     }
     void Data::parsePidMap(std::mutex &VPage_map_mutex,const std::string pid, int count){
-        std::cout<<"MEOW";
         auto PidPages = std::make_shared<std::vector<std::shared_ptr<VPage>>>();
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::stringstream buffer;
@@ -64,9 +63,8 @@
             start_Vaddr = Vaddr.substr(0,pos);
             end_Vaddr = Vaddr.substr(pos+1);
             auto page = std::make_shared<VPage>();
-            page->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
-            page->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
-            std::cout<<inode<<std::endl;
+            page->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_Vaddr,nullptr,16));
+            page->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_Vaddr,nullptr,16));
             //page->inode = std::stoul(inode);
             page->path_name = path_name;
             PidPages->push_back(std::move(page));
