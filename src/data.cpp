@@ -8,6 +8,7 @@
 #include <mutex>
 #include <dirent.h>
 #include <memory>
+#include <sstream>
 #include "../include/data.hpp"
 
     void Data::parseMeminfo(std::mutex& meminfo_mutex){
@@ -43,6 +44,7 @@
 
     }
     void Data::parsePidMap(std::mutex &VPage_map_mutex,const std::string pid, int count){
+        std::cout<<"MEOW";
         auto PidPages = std::make_shared<std::vector<std::shared_ptr<VPage>>>();
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::stringstream buffer;
@@ -51,34 +53,21 @@
         std::string line;
         //! istringstream is better YES, but i wanted to try myself..
         while(std::getline(buffer,line)){
-            if(line ==""){
+            if(line.empty()){
                 continue;
             }
-            size_t startEndPointer = line.find('-');
-            size_t WhiteSpace = line.find(' ');
-            size_t WhiteSpace2 = line.find(' ',WhiteSpace+1);
-            auto forwardWhiteSpace = [&WhiteSpace,&WhiteSpace2](std::string &line,int&& times){
-                for(;times==0;times--){
-                WhiteSpace = WhiteSpace2+1;
-                if(line.find(' ',WhiteSpace)!=std::string::npos){
-                    WhiteSpace2 = line.find(' ',WhiteSpace);
-                }else{
-                    WhiteSpace2 = 0;
-                }
-                }
-            };
-            std::string start_address = line.substr(0,startEndPointer);
-            std::string end_address = line.substr(startEndPointer+1,WhiteSpace);
-            //skip perms,offset,dev| check for indeo if = 0 (stack,heap etc);
-            forwardWhiteSpace(line,4);
-            std::string inode = line.substr(WhiteSpace,WhiteSpace2);
-            forwardWhiteSpace(line,1);
-            std::string path_name = line.substr(WhiteSpace);
-
+            std::istringstream iss(line);
+            std::string Vaddr,start_Vaddr,end_Vaddr,perms,dev,path_name;
+            uint32_t offset,inode;
+            iss >>Vaddr >>perms >>offset >>dev >>inode >>path_name;
+            size_t pos = Vaddr.find('-');
+            start_Vaddr = Vaddr.substr(0,pos);
+            end_Vaddr = Vaddr.substr(pos+1);
             auto page = std::make_shared<VPage>();
             page->start_Vaddr = static_cast<uintptr_t>(std::stoull(start_address,nullptr,16));
             page->end_Vaddr = static_cast<uintptr_t>(std::stoull(end_address,nullptr,16));
-            page->inode = std::stoul(inode);
+            std::cout<<inode<<std::endl;
+            //page->inode = std::stoul(inode);
             page->path_name = path_name;
             PidPages->push_back(std::move(page));
         }
