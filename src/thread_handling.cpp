@@ -26,11 +26,9 @@ namespace Thread{
                             int count = 0;
                             std::vector<std::thread> threads;
                             for(const std::string &pid : pids){
-                                threads.emplace_back([&data, &VPage_map_mutex,&pid, count]{
                                     data->parsePidMap(VPage_map_mutex,pid,count);
-                                });
                             }
-                            for(auto &t : threads) t.join();
+                            /*for(auto &t : threads) t.join();*/
 
                             std::this_thread::sleep_for(std::chrono::seconds(1));
                         }
