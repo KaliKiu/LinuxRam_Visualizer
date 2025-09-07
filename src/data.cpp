@@ -43,7 +43,7 @@
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
     }
-    void Data::parsePidMap(std::mutex &VPage_map_mutex,const std::string pid, int count){
+    void Data::parsePidMap(const std::string pid, int count){
         auto PidPages = std::make_shared<std::vector<std::shared_ptr<VPage>>>();
         std::string pidmem_path = "/proc/"+pid+"/maps";
         std::stringstream buffer;
@@ -69,7 +69,6 @@
             page->path_name = path_name;
             PidPages->push_back(std::move(page));
         }
-        std::lock_guard<std::mutex> lock(VPage_map_mutex);
         this->VPage_map->emplace(std::stol(pid),std::move(PidPages));
     }
 

@@ -11,6 +11,7 @@ namespace Thread{
     void threadHandling(Data* data){
         std::mutex meminfo_mutex;
         std::mutex VPage_map_mutex;
+        
 
         std::thread meminfo_fetch([&data,&meminfo_mutex] {
                         while(true){
@@ -25,10 +26,13 @@ namespace Thread{
                             std::vector<std::string> pids = Data::getPid();
                             int count = 0;
                             std::vector<std::thread> threads;
+                            std::lock_guard<std::mutex> lock(VPage_map_mutex);
                             for(const std::string &pid : pids){
-                                    data->parsePidMap(VPage_map_mutex,pid,count);
+                                threads.emplace_back([&data,&pid, count]{
+                                    data->parsePidMap(pid,count);
+                                });
                             }
-                            /*for(auto &t : threads) t.join();*/
+                            for(auto &t : threads) t.join();
 
                             std::this_thread::sleep_for(std::chrono::seconds(1));
                         }

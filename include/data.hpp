@@ -30,7 +30,7 @@ class Data{
 
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
-        void parsePidMap(std::mutex &VPage_map_mutex,const std::string pid,int count);
+        void parsePidMap(const std::string pid,int count);
         static std::vector<std::string> getPid();
 
         //DATA
