@@ -36,7 +36,8 @@ namespace Thread{
                         }
                         });
         fetch_pid_data.detach();
-        int count=0;
+        while(true){}
+        /*int count=0;
         while(true){printf("\nCOUNT: %d\nMemTotal: %d\nMemFree: %d\n",count,
                     data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
                     count++;
@@ -48,6 +49,6 @@ namespace Thread{
                 }
             }
         std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
+    }*/
 }
 }
