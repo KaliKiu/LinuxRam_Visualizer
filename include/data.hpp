@@ -29,11 +29,6 @@ class Data{
         static constexpr const char* INACTIVE_FILE = "Inactive(file)";
         static constexpr const char* SLAB = "Slab";
         
-        //FUNCTIONS
-        void parseMeminfo(std::mutex  &meminfo_mutex);
-        void parsePidMap(const std::string pid,int count);
-        static std::shared_ptr<std::vector<std::string>> getPid();
-        void parsePidPageMap(const std::string pid,std::mutex PageMap_mutex);
         //DATA
         std::shared_ptr<std::vector<std::string>> pids;
         struct Meminfo{
@@ -50,5 +45,12 @@ class Data{
         };
         //vector filled with virtual address mapped per pid in smart pointer
         std::shared_ptr<std::map<uint32_t,std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>> VPage_map;
+
+        //FUNCTIONS
+        void parseMeminfo(std::mutex  &meminfo_mutex);
+        void parsePidMap(const std::string pid,int count);
+        static std::shared_ptr<std::vector<std::string>> getPid();
+        void parsePidPageMap(const long pid,std::vector<std::shared_ptr<Data::VPage>> &vector, std::mutex &PageMap_mutex);
+        
 };
 #endif
