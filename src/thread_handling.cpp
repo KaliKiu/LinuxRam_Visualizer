@@ -27,10 +27,11 @@ namespace Thread{
                             int count = 0;
                             std::vector<std::thread> threads;
                             {
-                                std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                                
                             for(const std::string &pid : pids){
-                                threads.emplace_back([&data,&pid, count]{
-                                    data->parsePidMap(pid,count);
+                                threads.emplace_back([&data,&pid, count,&VPage_map_mutex]{
+                                    std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                                    
                                 });
                             }
                             for(auto &t : threads) t.join();
@@ -59,7 +60,7 @@ namespace Thread{
                 }*/
                 for(auto &t : *data->VPage_map){
                     if(!t.second || t.second->empty()) continue;
-                    printf("\n%d: %lx-%lx",t.first,(*t.second)[0]->start_Vaddr,(*t.second)[0]->end_Vaddr);
+                    printf("\n%d: %lx-%lx vectorsize %d",t.first,(*t.second)[0]->start_Vaddr,(*t.second)[0]->end_Vaddr,(*t.second).size());
                     
                 }
             }

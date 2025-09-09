@@ -11,6 +11,7 @@ class Data{
         //CONSTRUCTOR
         Data(){
             meminfo_struct = new Meminfo();
+            pids = std::make_shared<std::vector<std::string>>;
             VPage_map = std::make_shared<std::map<uint32_t, std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>>();
             }
         ~Data(){delete meminfo_struct;};
@@ -27,13 +28,14 @@ class Data{
         static constexpr const char* INACTIVE_ANON = "Inactive(anon)";
         static constexpr const char* INACTIVE_FILE = "Inactive(file)";
         static constexpr const char* SLAB = "Slab";
-
+        
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
         void parsePidMap(const std::string pid,int count);
         static std::vector<std::string> getPid();
-
+        void parsePid(const std::string pid);
         //DATA
+        std::vector<std::string> pids;
         struct Meminfo{
             uint32_t memtotal;
             uint32_t memfree;

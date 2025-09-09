@@ -71,6 +71,9 @@
         }
         this->VPage_map->emplace(std::stol(pid),std::move(PidPages));
     }
+    void Data::parsePidPageMap(const std::string pid){
+        
+    }
 
     std::vector<std::string> Data::getPid(){
         const char* procDir = "/proc";
