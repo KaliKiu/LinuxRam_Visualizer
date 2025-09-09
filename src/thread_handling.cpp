@@ -8,12 +8,13 @@
 
 
 namespace Thread{
-    void threadHandling(Data* data){
+    void threadHandling(std::shared_ptr<Data> data){
         std::mutex meminfo_mutex;
         std::mutex VPage_map_mutex;
+        std::mutex PageMap_mutex;
         
 
-        std::thread meminfo_fetch([&data,&meminfo_mutex] {
+        std::thread meminfo_fetch([data,&meminfo_mutex] {
                         while(true){
                             data->parseMeminfo(meminfo_mutex);
                             std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -21,27 +22,48 @@ namespace Thread{
                         });
         meminfo_fetch.detach();
 
-        std::thread fetch_pid_data([&data,&VPage_map_mutex]{
+        std::thread fetch_pid_data([data,&VPage_map_mutex,&PageMap_mutex]{
                         while(true){
+                            {
+                            VPage_map_mutex.lock();
                             auto pids = Data::getPid();
+                            if(data->pids == nullptr)continue;
                             data->pids = pids;
                             int count = 0;
                             std::vector<std::thread> threads;
-                            {
+                            VPage_map_mutex.unlock();
+
                             std::lock_guard<std::mutex> lock(VPage_map_mutex);
                             for(const std::string &pid : *(data->pids)){
-                                threads.emplace_back([&data,pid, count]{
+                                threads.emplace_back([data,pid, count]{
                                     data->parsePidMap(pid,count);
-                                    
+
                                 });
                             }
                             for(auto &t : threads) t.join();
-
-                            std::this_thread::sleep_for(std::chrono::seconds(1));
+                            //fetch pagemap everything oowowowowo
                             }
+                            std::this_thread::sleep_for(std::chrono::seconds(1));
                         }
                         });
         fetch_pid_data.detach();
+
+        /*std::thread fetch_pid_PageMap_data([data,&VPage_map_mutex,&PageMap_mutex]{
+                        while(true){
+
+                            VPage_map_mutex.lock();
+                            std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                            if(data->pids == nullptr)continue;
+                            auto pids = data->pids;
+                            VPage_map_mutex.unlock();
+                            {
+                            std::lock_guard<std::mutex> lock(VPage_map_mutex);
+
+                            }
+                            std::this_thread::sleep_for(std::chrono::seconds(1));
+                        }
+        });*/
+
         //while(true){std::cout<<"a"<<std::endl;std::this_thread::sleep_for(std::chrono::seconds(1));}
         
         //debugging stuff ahead!!!

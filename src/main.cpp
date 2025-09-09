@@ -7,7 +7,7 @@
 
 
 int main(){
-    Data* data = new Data();
+    auto data = std::make_shared<Data>();
     
     try{
         Thread::threadHandling(data);

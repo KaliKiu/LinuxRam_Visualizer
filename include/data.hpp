@@ -11,7 +11,7 @@ class Data{
         //CONSTRUCTOR
         Data(){
             meminfo_struct = new Meminfo();
-            pids = std::make_shared<std::vector<std::string>>;
+            pids = std::make_shared<std::vector<std::string>>();
             VPage_map = std::make_shared<std::map<uint32_t, std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>>();
             }
         ~Data(){delete meminfo_struct;};
@@ -32,8 +32,8 @@ class Data{
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
         void parsePidMap(const std::string pid,int count);
-        static shared_ptr<std::vector<std::string>> getPid();
-        void parsePid(const std::string pid);
+        static std::shared_ptr<std::vector<std::string>> getPid();
+        void parsePidPageMap(const std::string pid,std::mutex PageMap_mutex);
         //DATA
         std::shared_ptr<std::vector<std::string>> pids;
         struct Meminfo{

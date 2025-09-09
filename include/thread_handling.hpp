@@ -5,6 +5,6 @@
 #include "../include/data.hpp"
 
 namespace Thread{
-   void threadHandling(Data* data); 
+   void threadHandling(std::shared_ptr<Data> data); 
 }
 #endif
