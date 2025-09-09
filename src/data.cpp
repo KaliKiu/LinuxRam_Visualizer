@@ -72,10 +72,10 @@
         this->VPage_map->emplace(std::stol(pid),std::move(PidPages));
     }
     void Data::parsePidPageMap(const std::string pid){
-        
+
     }
 
-    std::vector<std::string> Data::getPid(){
+    std::shared_ptr<std::vector<std::string>> Data::getPid(){
         const char* procDir = "/proc";
         DIR* dir = opendir(procDir);
         if (!dir) {
@@ -96,5 +96,5 @@
             }
         }
         closedir(dir);
-        return pids;
+        return std::make_shared<std::vector<std::string>>(std::move(pids));
     }

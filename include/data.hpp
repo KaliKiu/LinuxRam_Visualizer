@@ -32,10 +32,10 @@ class Data{
         //FUNCTIONS
         void parseMeminfo(std::mutex  &meminfo_mutex);
         void parsePidMap(const std::string pid,int count);
-        static std::vector<std::string> getPid();
+        static shared_ptr<std::vector<std::string>> getPid();
         void parsePid(const std::string pid);
         //DATA
-        std::vector<std::string> pids;
+        std::shared_ptr<std::vector<std::string>> pids;
         struct Meminfo{
             uint32_t memtotal;
             uint32_t memfree;

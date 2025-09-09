@@ -23,14 +23,15 @@ namespace Thread{
 
         std::thread fetch_pid_data([&data,&VPage_map_mutex]{
                         while(true){
-                            std::vector<std::string> pids = Data::getPid();
+                            auto pids = Data::getPid();
+                            data->pids = pids;
                             int count = 0;
                             std::vector<std::thread> threads;
                             {
-                                
-                            for(const std::string &pid : pids){
-                                threads.emplace_back([&data,&pid, count,&VPage_map_mutex]{
-                                    std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                            std::lock_guard<std::mutex> lock(VPage_map_mutex);
+                            for(const std::string &pid : *(data->pids)){
+                                threads.emplace_back([&data,pid, count]{
+                                    data->parsePidMap(pid,count);
                                     
                                 });
                             }
