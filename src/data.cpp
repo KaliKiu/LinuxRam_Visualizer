@@ -77,7 +77,8 @@
             std::cout<<"No pid";
             
         }*/
-        const std::string path =  "/proc"+ pidstr+"/pagemap";
+        const std::string path =  "/proc/"+ pidstr+"/pagemap";
+        std::cout <<path<<std::endl;
         /*std::ifstream file(path,std::ios::binary);
         if(!file){
             std::cout <<"parsePidPageMap fail";
