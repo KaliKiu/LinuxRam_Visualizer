@@ -61,18 +61,15 @@ namespace Thread{
                             std::unique_lock<std::mutex> lock(VAddress_map_mutex);
                             cv_fetch_thread.wait(lock,[&cv_fetch_thread_ready]{return cv_fetch_thread_ready;});cv_fetch_thread_ready=false;
                             if(data->pids == nullptr)continue;
-                            auto pids = data->pids;
                             auto VA = *data->VPage_map;
                             std::vector<std::thread> threads; 
                             lock.unlock();
                             for(auto &t : VA){
-                                
                                     threads.emplace_back([data,t,&PageMap_mutex]{
                                     data->parsePidPageMap(t.first,(*t.second),PageMap_mutex);
                                 });
                             }
                             for(auto &i : threads) i.join();
-                            
                             std::this_thread::sleep_for(std::chrono::seconds(1));
                         }
                         });
