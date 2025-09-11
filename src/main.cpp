@@ -17,6 +17,8 @@ int main(){
         std::cerr<<"invalid_argument: " <<e.what();
     }catch(const std::system_error &e){
         std::cerr<<"system_error"<<e.code() <<"exit code: "<<e.code();
+    }catch(const std::ifstream::failure e){
+        std::cerr<<"ifstream_error: "<<e.what();
     }catch(...){
         std::cerr<<"U cooked man";
     }

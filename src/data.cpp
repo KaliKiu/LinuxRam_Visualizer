@@ -85,9 +85,15 @@
             throw 1;
         }
         for(auto &t : vector){
-            int32_t space = t->end_Vaddr- t->start_Vaddr;
-            int32_t index {space/0x1000};
-            
+            size_t space = t->end_Vaddr- t->start_Vaddr;
+            size_t index {space/0x1000};
+            for(int i; i<index;i++){
+                size_t VA = t->start_Vaddr+i*0x1000;
+                off_t offset = VA*0x8;
+                
+                file.read(&BYTE,BIT)
+
+            }
         }
     }
 

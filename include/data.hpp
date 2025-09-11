@@ -28,7 +28,8 @@ class Data{
         static constexpr const char* INACTIVE_ANON = "Inactive(anon)";
         static constexpr const char* INACTIVE_FILE = "Inactive(file)";
         static constexpr const char* SLAB = "Slab";
-        
+        static constexpr uint8_t BIT = 0x1;
+        static char BYTE;
         //DATA
         std::shared_ptr<std::vector<std::string>> pids;
         struct Meminfo{
