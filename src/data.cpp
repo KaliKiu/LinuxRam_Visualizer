@@ -72,29 +72,27 @@
     }
     void Data::parsePidPageMap(const long pid,std::vector<std::shared_ptr<Data::VPage>> &vector,std::mutex &PageMap_mutex){
         std::string pidstr = std::to_string(pid);
-        /*if(pidstr.empty()){
+        if(pidstr.empty()){
             std::cout<<"No pid";
-            
-        }*/
-        const std::string path =  "/proc/"+ pidstr+"/pagemap";
-        std::cout <<path<<std::endl;
-        std::ifstream file(path,std::ios::binary);
-        if(!file){
-            std::cout <<"parsePidPageMap fail";
             throw 1;
+            
         }
+        const std::string path =  "/proc/"+ pidstr+"/pagemap";
+        //std::cout <<path<<std::endl;
+        std::ifstream file(path,std::ios::binary);
         file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-        /*for(auto &t : vector){
+        for(auto &t : vector){
             size_t space = t->end_Vaddr- t->start_Vaddr;
-            size_t index {space/0x1000};
-            for(int i; i<index;i++){
-                size_t VA = t->start_Vaddr+i*0x1000;
-                off_t offset = VA*0x8;
-                char byte;
-                file.read(&byte,BIT);
-                
+            size_t index {space/PAGE_SIZE};
+            for(int i=0; i<index;i++){
+                size_t VA = t->start_Vaddr+i*PAGE_SIZE;
+                size_t offset = VA/PAGE_SIZE * sizeof(uint64_t);
+                file.seekg(offset,std::ios::beg);
+                uint64_t entry;
+                file.read(reinterpret_cast<char*>(&entry), sizeof(entry));
+
             }
-        }*/
+        }
     }
 
     std::shared_ptr<std::vector<std::string>> Data::getPid(){
