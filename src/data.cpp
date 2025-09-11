@@ -72,9 +72,13 @@
         this->VPage_map->emplace(std::stol(pid),std::move(PidPages));
     }
     void Data::parsePidPageMap(const long pid,std::vector<std::shared_ptr<Data::VPage>> &vector,std::mutex &PageMap_mutex){
-        /*std::string pidstr = std::to_string(pid);
+        std::string pidstr = std::to_string(pid);
+        /*if(pidstr.empty()){
+            std::cout<<"No pid";
+            
+        }*/
         const std::string path =  "/proc"+ pidstr+"/pagemap";
-        std::ifstream file(path,std::ios::binary);
+        /*std::ifstream file(path,std::ios::binary);
         if(!file){
             std::cout <<"parsePidPageMap fail";
             throw 1;

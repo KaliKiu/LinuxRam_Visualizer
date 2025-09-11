@@ -72,7 +72,8 @@ namespace Thread{
                             
                             std::this_thread::sleep_for(std::chrono::seconds(1));
                         }
-        });
+                        });
+        fetch_pid_PageMap_data.detach();
 
         //while(true){std::cout<<"a"<<std::endl;std::this_thread::sleep_for(std::chrono::seconds(1));}
         
