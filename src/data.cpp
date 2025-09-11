@@ -79,12 +79,16 @@
         }*/
         const std::string path =  "/proc/"+ pidstr+"/pagemap";
         std::cout <<path<<std::endl;
-        /*std::ifstream file(path,std::ios::binary);
+        std::ifstream file(path,std::ios::binary);
         if(!file){
             std::cout <<"parsePidPageMap fail";
             throw 1;
-        }*/
-       
+        }
+        for(auto &t : vector){
+            int32_t space = t->end_Vaddr- t->start_Vaddr;
+            int32_t index {space/0x1000};
+            
+        }
     }
 
     std::shared_ptr<std::vector<std::string>> Data::getPid(){
