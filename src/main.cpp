@@ -15,10 +15,10 @@ int main(){
         std::cerr <<"filesystem_error: " <<e.what() <<"\nexit code: "<<e.code();
     }catch(const std::invalid_argument& e){
         std::cerr<<"invalid_argument: " <<e.what();
-    }catch(const std::system_error &e){
-        std::cerr<<"system_error"<<e.code() <<"exit code: "<<e.code();
     }catch(const std::ifstream::failure e){
         std::cerr<<"ifstream_error: "<<e.what();
+    }catch(const std::system_error &e){
+        std::cerr<<"system_error"<<e.code() <<"exit code: "<<e.code();
     }catch(...){
         std::cerr<<"U cooked man";
     }

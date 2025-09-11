@@ -10,25 +10,19 @@
 
 namespace Thread{
     void threadHandling(std::shared_ptr<Data> data){
-        std::mutex meminfo_mutex;
+        
         std::mutex VAddress_map_mutex;
         std::mutex PageMap_mutex;
         std::condition_variable cv_fetch_thread;
         bool cv_fetch_thread_ready = false;
         bool debug_ready = false;
 
-        std::thread meminfo_fetch([data,&meminfo_mutex] {
-                        while(true){
-                            data->parseMeminfo(meminfo_mutex);
-                            std::this_thread::sleep_for(std::chrono::seconds(1));
-                        }
-                        });
-        meminfo_fetch.detach();
-
+        //contains meminfo + /<pid>/map parse
         std::thread fetch_pid_data([data,&VAddress_map_mutex,&PageMap_mutex,&cv_fetch_thread,&cv_fetch_thread_ready,&debug_ready]{
                         while(true){
                             {
                             std::unique_lock<std::mutex> lock(PageMap_mutex);
+                            data->parseMeminfo();
                             auto pids = Data::getPid();
                             data->pids = pids;
                             if(data->pids == nullptr)continue;
@@ -56,7 +50,6 @@ namespace Thread{
         fetch_pid_data.detach();
 
         std::thread fetch_pid_PageMap_data([data,&VAddress_map_mutex,&PageMap_mutex,&cv_fetch_thread,&cv_fetch_thread_ready]{
-                        
                         while(true){
                             std::unique_lock<std::mutex> lock(VAddress_map_mutex);
                             cv_fetch_thread.wait(lock,[&cv_fetch_thread_ready]{return cv_fetch_thread_ready;});cv_fetch_thread_ready=false;
@@ -78,14 +71,16 @@ namespace Thread{
         //while(true){std::cout<<"a"<<std::endl;std::this_thread::sleep_for(std::chrono::seconds(1));}
         
         //debugging stuff ahead!!!
+        
         int count=0;
-        while(true){printf("\nCOUNT: %d\nMemTotal: %d\nMemFree: %d\n",count,
-                    data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
-                    count++;
+        while(true){
+            std::unique_lock<std::mutex> lock(VAddress_map_mutex);
+            cv_fetch_thread.wait(lock,[&debug_ready]{return debug_ready;});debug_ready = false;
+            printf("\nCOUNT: %d\nMemTotal: %d\nMemFree: %d\n",count,
+            data->meminfo_struct->memtotal,data->meminfo_struct->memfree);
+            count++;
             {   
                 auto VPage_map_ptr = data->VPage_map;
-                std::unique_lock<std::mutex> lock(VAddress_map_mutex);
-                cv_fetch_thread.wait(lock,[&debug_ready]{return debug_ready;});debug_ready = false;
                 
                 
                 /*auto pidVpage = *data->VPage_map->begin()->second;

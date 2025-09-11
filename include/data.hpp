@@ -48,7 +48,7 @@ class Data{
         std::shared_ptr<std::map<uint32_t,std::shared_ptr<std::vector<std::shared_ptr<VPage>>>>> VPage_map;
 
         //FUNCTIONS
-        void parseMeminfo(std::mutex  &meminfo_mutex);
+        void parseMeminfo();
         void parsePidMap(const std::string pid,int count);
         static std::shared_ptr<std::vector<std::string>> getPid();
         void parsePidPageMap(const long pid,std::vector<std::shared_ptr<Data::VPage>> &vector, std::mutex &PageMap_mutex);

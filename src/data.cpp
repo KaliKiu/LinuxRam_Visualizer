@@ -11,7 +11,7 @@
 #include <sstream>
 #include "../include/data.hpp"
 
-    void Data::parseMeminfo(std::mutex& meminfo_mutex){
+    void Data::parseMeminfo(){
         std::unordered_map<std::string,int32_t> meminfo_map;
         std::ifstream meminfo(MEMINFO_PATH);
         std::stringstream buffer;
@@ -38,7 +38,6 @@
             //printf("\n%s: %d kb MAP : %d",key.c_str(),value,meminfo_map[key]);
         }
         meminfo.close();
-        std::lock_guard<std::mutex> lock(meminfo_mutex);
         this->meminfo_struct->memtotal = meminfo_map[std::string(MEMTOTAL)];
         this->meminfo_struct->memfree = meminfo_map[std::string(MEMFREE)];
 
@@ -84,17 +83,18 @@
             std::cout <<"parsePidPageMap fail";
             throw 1;
         }
-        for(auto &t : vector){
+        file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        /*for(auto &t : vector){
             size_t space = t->end_Vaddr- t->start_Vaddr;
             size_t index {space/0x1000};
             for(int i; i<index;i++){
                 size_t VA = t->start_Vaddr+i*0x1000;
                 off_t offset = VA*0x8;
+                char byte;
+                file.read(&byte,BIT);
                 
-                file.read(&BYTE,BIT)
-
             }
-        }
+        }*/
     }
 
     std::shared_ptr<std::vector<std::string>> Data::getPid(){
