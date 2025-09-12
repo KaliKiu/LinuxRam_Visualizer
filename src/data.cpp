@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <mutex>
 #include <dirent.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <memory>
 #include <sstream>
 #include "../include/data.hpp"
@@ -77,22 +79,32 @@
             throw 1;
             
         }
-        const std::string path =  "/proc/"+ pidstr+"/pagemap";
-        //std::cout <<path<<std::endl;
-        std::ifstream file(path,std::ios::binary);
-        file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+        const std::string path= "proc/"+pidstr+"/pagemap";
+        int fd = open(path.c_str(), O_RDONLY);
+        if (fd == -1) {
+            perror("open");
+            return;
+        }
         for(auto &t : vector){
             size_t space = t->end_Vaddr- t->start_Vaddr;
             size_t index {space/PAGE_SIZE};
             for(int i=0; i<index;i++){
                 size_t VA = t->start_Vaddr+i*PAGE_SIZE;
-                size_t offset = VA/PAGE_SIZE * sizeof(uint64_t);
-                file.seekg(offset,std::ios::beg);
-                uint64_t entry;
-                file.read(reinterpret_cast<char*>(&entry), sizeof(entry));
-
+                off_t offset = (VA/getpagesize()) * sizeof(uint64_t);
+                if (lseek(fd, offset, SEEK_SET) == -1) {
+                    perror("lseek");
+                    close(fd);
+                    return;
+                }
+                uint64_t entry = 0;
+                if (read(fd, &entry, sizeof(entry)) != sizeof(entry)) {
+                    perror("read");
+                    close(fd);
+                    return;
+                }
             }
         }
+        close(fd);
     }
 
     std::shared_ptr<std::vector<std::string>> Data::getPid(){
